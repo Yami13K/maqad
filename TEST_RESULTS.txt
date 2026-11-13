@@ -1,6 +1,6 @@
-Date: 2026-11-13 12:26:53 UTC
+Date: 2026-11-13 13:27:54 UTC
 Command: docker compose exec -T app php artisan test --testdox
-Commit: 4d8c27f
+Commit: working tree on top of 19ac386
 Exit code: 0
 
 PHPUnit 12.5.43 by Sebastian Bergmann and contributors.
@@ -31,9 +31,10 @@ Configuration: /var/www/html/phpunit.xml
   ✓ the tier depends only on seconds left with data set "already started"
 
    PASS  Tests\Feature\Booking\BookSeatTest
-  ✓ a free seat is confirmed charged and snapshotted                     0.41s  
-  ✓ a full session puts the student on the waitlist without charging     0.06s  
-  ✓ t3 same idempotency key twice returns the same response and charges… 0.05s  
+  ✓ a free seat is confirmed charged and snapshotted                     0.40s  
+  ✓ a full session puts the student on the waitlist without charging     0.05s  
+  ✓ a free session is confirmed without a ledger row                     0.04s  
+  ✓ t3 same idempotency key twice returns the same response and charges… 0.04s  
   ✓ the same key on a different request is rejected                      0.05s  
   ✓ a failed attempt releases the key so the client can retry            0.05s  
   ✓ a student cannot hold two active bookings on one session             0.05s  
@@ -46,9 +47,9 @@ Configuration: /var/www/html/phpunit.xml
    PASS  Tests\Feature\Booking\CancelBookingTest
   ✓ t4 refund follows the tier measured from the branch local start wit… 0.06s  
   ✓ t4 refund follows the tier measured from the branch local start wit… 0.05s  
-  ✓ t4 refund follows the tier measured from the branch local start wit… 0.05s  
-  ✓ t4 refund follows the tier measured from the branch local start wit… 0.05s  
-  ✓ t4 refund follows the tier measured from the branch local start wit… 0.05s  
+  ✓ t4 refund follows the tier measured from the branch local start wit… 0.06s  
+  ✓ t4 refund follows the tier measured from the branch local start wit… 0.06s  
+  ✓ t4 refund follows the tier measured from the branch local start wit… 0.06s  
   ✓ t4 refund follows the tier measured from the branch local start wit… 0.05s  
   ✓ t4 refund follows the tier measured from the branch local start wit… 0.05s  
   ✓ t4 refund follows the tier measured from the branch local start wit… 0.05s  
@@ -61,32 +62,32 @@ Configuration: /var/www/html/phpunit.xml
   ✓ nobody is promoted when no waitlisted student can pay                0.06s  
 
    PASS  Tests\Feature\Concurrency\ConcurrentBookingTest
-  ✓ t1 concurrent booking never exceeds capacity                         1.76s  
+  ✓ t1 concurrent booking never exceeds capacity                         1.70s  
   ✓ t2 one student racing two overlapping sessions gets one booking and… 0.91s  
-  ✓ t3 same idempotency key sent in parallel books and charges once      0.57s  
+  ✓ t3 same idempotency key sent in parallel books and charges once      0.55s  
 
    PASS  Tests\Feature\Schema\SchemaConstraintsTest
-  ✓ database rejects with data set " c1 session mixes course of center…  0.37s  
+  ✓ database rejects with data set " c1 session mixes course of center…  0.38s  
   ✓ database rejects with data set " c3 confirmed count above capacity…  0.14s  
-  ✓ database rejects with data set " c3 confirmed count below zero"      0.13s  
+  ✓ database rejects with data set " c3 confirmed count below zero"      0.14s  
   ✓ database rejects with data set " c4 ledger row update is refused"    0.14s  
   ✓ database rejects with data set " c4 ledger row delete is refused"    0.14s  
   ✓ database rejects with data set " c4 ledger truncate is refused"      0.14s  
-  ✓ database rejects with data set " c5 charge with positive amount"     0.14s  
+  ✓ database rejects with data set " c5 charge with positive amount"     0.13s  
   ✓ database rejects with data set " c5 top-up linked to a booking"      0.14s  
   ✓ database rejects with data set " c5 refund without a booking"        0.14s  
   ✓ database rejects with data set " c5 unknown movement type"           0.14s  
   ✓ database rejects with data set " c6 negative wallet balance"         0.14s  
-  ✓ database rejects with data set " c7 second wallet for the same stud… 0.15s  
-  ✓ database rejects with data set " c8 unknown booking status"          0.14s  
-  ✓ database rejects with data set " c8 waitlisted without a queue posi… 0.13s  
-  ✓ database rejects with data set " c11 confirmed without price and co… 0.13s  
-  ✓ database rejects with data set " c9 second active booking for the s… 0.13s  
+  ✓ database rejects with data set " c7 second wallet for the same stud… 0.14s  
+  ✓ database rejects with data set " c8 unknown booking status"          0.15s  
+  ✓ database rejects with data set " c8 waitlisted without a queue posi… 0.14s  
+  ✓ database rejects with data set " c11 confirmed without price and co… 0.14s  
+  ✓ database rejects with data set " c9 second active booking for the s… 0.14s  
   ✓ database rejects with data set " c12 unknown session status"         0.13s  
   ✓ database rejects with data set " c13 second refund for the same boo… 0.13s  
-  ✓ database rejects with data set " c14 same idempotency key twice for… 0.13s  
-  ✓ database rejects with data set " session interval must be positive"  0.13s  
-  ✓ database rejects with data set " commission rate above 100 percent"  0.13s  
+  ✓ database rejects with data set " c14 same idempotency key twice for… 0.14s  
+  ✓ database rejects with data set " session interval must be positive"  0.14s  
+  ✓ database rejects with data set " commission rate above 100 percent"  0.14s  
   ✓ rebooking after cancellation is allowed                              0.14s  
   ✓ seeded wallets match their ledger                                    0.14s  
 
@@ -94,14 +95,15 @@ Configuration: /var/www/html/phpunit.xml
   ✓ the statement lists the callers ledger oldest first                  0.06s  
   ✓ the statement requires a known student                               0.01s  
 
-  Tests:    69 passed (309 assertions)
+  Tests:    70 passed (316 assertions)
   Duration: 8.41s
 
-Time: 00:08.331, Memory: 60.50 MB
+Time: 00:08.330, Memory: 60.50 MB
 
 Book Seat (Tests\Feature\Booking\BookSeat)
  ✔ A free seat is confirmed charged and snapshotted
  ✔ A full session puts the student on the waitlist without charging
+ ✔ A free session is confirmed without a ledger row
  ✔ T3 same idempotency key twice returns the same response and charges once
  ✔ The same key on a different request is rejected
  ✔ A failed attempt releases the key so the client can retry
@@ -184,4 +186,4 @@ Wallet Statement (Tests\Feature\Wallet\WalletStatement)
  ✔ The statement lists the callers ledger oldest first
  ✔ The statement requires a known student
 
-OK (69 tests, 309 assertions)
+OK (70 tests, 316 assertions)

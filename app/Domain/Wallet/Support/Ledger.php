@@ -17,7 +17,10 @@ final class Ledger
 {
     public function charge(Wallet $wallet, Booking $booking, Money $price): void
     {
-        $this->record($wallet, $booking, TransactionType::Charge, $price->negated());
+        // A free session (price 0, allowed by the schema) writes no row, mirroring refund().
+        if ($price->isPositive()) {
+            $this->record($wallet, $booking, TransactionType::Charge, $price->negated());
+        }
     }
 
     public function refund(Wallet $wallet, Booking $booking, Money $amount): void

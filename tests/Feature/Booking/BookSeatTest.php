@@ -92,6 +92,23 @@ final class BookSeatTest extends TestCase
     }
 
     #[Test]
+    public function a_free_session_is_confirmed_without_a_ledger_row(): void
+    {
+        $session = $this->makeSession(['price' => '0.000']);
+        $student = Student::factory()->withBalance('100.000')->create();
+
+        $response = $this->book($student, $session->id);
+
+        $response->assertStatus(201)
+            ->assertJsonPath('status', 'confirmed')
+            ->assertJsonPath('charged_amount', '0.000')
+            ->assertJsonPath('wallet_balance', '100.000');
+        $this->assertDatabaseMissing('wallet_transactions', ['booking_id' => $response->json('booking_id')]);
+        $this->assertSame(1, CourseSession::query()->whereKey($session->id)->value('confirmed_count'));
+        $this->assertLedgerMatchesBalances();
+    }
+
+    #[Test]
     public function T3_same_idempotency_key_twice_returns_the_same_response_and_charges_once(): void
     {
         $session = $this->makeSession();
