@@ -1,0 +1,187 @@
+Date: 2026-11-13 12:26:53 UTC
+Command: docker compose exec -T app php artisan test --testdox
+Commit: 4d8c27f
+Exit code: 0
+
+PHPUnit 12.5.43 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.3.36
+Configuration: /var/www/html/phpunit.xml
+
+
+   PASS  Tests\Unit\MoneyTest
+  ✓ it parses and prints three decimals exactly
+  ✓ percent rounds half up with data set "half of 42.125 rounds up"
+  ✓ percent rounds half up with data set "half of 50.000 is exact"
+  ✓ percent rounds half up with data set "full"
+  ✓ percent rounds half up with data set "none"
+  ✓ percent rounds half up with data set "half of 0.001 rounds up"
+  ✓ times applies a four decimal rate half up with data set "42.125 x 15% = 6.31875"
+  ✓ times applies a four decimal rate half up with data set "50 x 10%"
+  ✓ times applies a four decimal rate half up with data set "0.005 x 10% = 0.0005"
+  ✓ times applies a four decimal rate half up with data set "0.004 x 10% = 0.0004"
+  ✓ times applies a four decimal rate half up with data set "full rate"
+  ✓ it rejects floats and too many decimals
+
+   PASS  Tests\Unit\RefundPolicyTest
+  ✓ the tier depends only on seconds left with data set "48:00:00 exact… 0.02s  
+  ✓ the tier depends only on seconds left with data set "47:59:59"
+  ✓ the tier depends only on seconds left with data set "12:00:00 exactly"
+  ✓ the tier depends only on seconds left with data set "11:59:59"
+  ✓ the tier depends only on seconds left with data set "already started"
+
+   PASS  Tests\Feature\Booking\BookSeatTest
+  ✓ a free seat is confirmed charged and snapshotted                     0.41s  
+  ✓ a full session puts the student on the waitlist without charging     0.06s  
+  ✓ t3 same idempotency key twice returns the same response and charges… 0.05s  
+  ✓ the same key on a different request is rejected                      0.05s  
+  ✓ a failed attempt releases the key so the client can retry            0.05s  
+  ✓ a student cannot hold two active bookings on one session             0.05s  
+  ✓ an overlapping session is rejected                                   0.05s  
+  ✓ back to back sessions do not overlap                                 0.05s  
+  ✓ a waitlisted booking also blocks an overlapping one                  0.06s  
+  ✓ a started or cancelling session cannot be booked                     0.04s  
+  ✓ the edge rejects unknown students missing keys and missing sessions  0.03s  
+
+   PASS  Tests\Feature\Booking\CancelBookingTest
+  ✓ t4 refund follows the tier measured from the branch local start wit… 0.06s  
+  ✓ t4 refund follows the tier measured from the branch local start wit… 0.05s  
+  ✓ t4 refund follows the tier measured from the branch local start wit… 0.05s  
+  ✓ t4 refund follows the tier measured from the branch local start wit… 0.05s  
+  ✓ t4 refund follows the tier measured from the branch local start wit… 0.05s  
+  ✓ t4 refund follows the tier measured from the branch local start wit… 0.05s  
+  ✓ t4 refund follows the tier measured from the branch local start wit… 0.05s  
+  ✓ t4 refund follows the tier measured from the branch local start wit… 0.05s  
+  ✓ cancelling a waitlisted booking moves no money                       0.06s  
+  ✓ a booking cannot be cancelled twice or refunded twice                0.06s  
+  ✓ a student cannot cancel someone elses booking                        0.04s  
+
+   PASS  Tests\Feature\Booking\WaitlistPromotionTest
+  ✓ t5 cancel skips the unpayable earliest promotes the next and the ca… 0.09s  
+  ✓ nobody is promoted when no waitlisted student can pay                0.06s  
+
+   PASS  Tests\Feature\Concurrency\ConcurrentBookingTest
+  ✓ t1 concurrent booking never exceeds capacity                         1.76s  
+  ✓ t2 one student racing two overlapping sessions gets one booking and… 0.91s  
+  ✓ t3 same idempotency key sent in parallel books and charges once      0.57s  
+
+   PASS  Tests\Feature\Schema\SchemaConstraintsTest
+  ✓ database rejects with data set " c1 session mixes course of center…  0.37s  
+  ✓ database rejects with data set " c3 confirmed count above capacity…  0.14s  
+  ✓ database rejects with data set " c3 confirmed count below zero"      0.13s  
+  ✓ database rejects with data set " c4 ledger row update is refused"    0.14s  
+  ✓ database rejects with data set " c4 ledger row delete is refused"    0.14s  
+  ✓ database rejects with data set " c4 ledger truncate is refused"      0.14s  
+  ✓ database rejects with data set " c5 charge with positive amount"     0.14s  
+  ✓ database rejects with data set " c5 top-up linked to a booking"      0.14s  
+  ✓ database rejects with data set " c5 refund without a booking"        0.14s  
+  ✓ database rejects with data set " c5 unknown movement type"           0.14s  
+  ✓ database rejects with data set " c6 negative wallet balance"         0.14s  
+  ✓ database rejects with data set " c7 second wallet for the same stud… 0.15s  
+  ✓ database rejects with data set " c8 unknown booking status"          0.14s  
+  ✓ database rejects with data set " c8 waitlisted without a queue posi… 0.13s  
+  ✓ database rejects with data set " c11 confirmed without price and co… 0.13s  
+  ✓ database rejects with data set " c9 second active booking for the s… 0.13s  
+  ✓ database rejects with data set " c12 unknown session status"         0.13s  
+  ✓ database rejects with data set " c13 second refund for the same boo… 0.13s  
+  ✓ database rejects with data set " c14 same idempotency key twice for… 0.13s  
+  ✓ database rejects with data set " session interval must be positive"  0.13s  
+  ✓ database rejects with data set " commission rate above 100 percent"  0.13s  
+  ✓ rebooking after cancellation is allowed                              0.14s  
+  ✓ seeded wallets match their ledger                                    0.14s  
+
+   PASS  Tests\Feature\Wallet\WalletStatementTest
+  ✓ the statement lists the callers ledger oldest first                  0.06s  
+  ✓ the statement requires a known student                               0.01s  
+
+  Tests:    69 passed (309 assertions)
+  Duration: 8.41s
+
+Time: 00:08.331, Memory: 60.50 MB
+
+Book Seat (Tests\Feature\Booking\BookSeat)
+ ✔ A free seat is confirmed charged and snapshotted
+ ✔ A full session puts the student on the waitlist without charging
+ ✔ T3 same idempotency key twice returns the same response and charges once
+ ✔ The same key on a different request is rejected
+ ✔ A failed attempt releases the key so the client can retry
+ ✔ A student cannot hold two active bookings on one session
+ ✔ An overlapping session is rejected
+ ✔ Back to back sessions do not overlap
+ ✔ A waitlisted booking also blocks an overlapping one
+ ✔ A started or cancelling session cannot be booked
+ ✔ The edge rejects unknown students missing keys and missing sessions
+
+Cancel Booking (Tests\Feature\Booking\CancelBooking)
+ ✔ T4 refund follows the tier measured from the branch local start with Asia/Damascus 48:01 before
+ ✔ T4 refund follows the tier measured from the branch local start with Asia/Damascus 47:59 before
+ ✔ T4 refund follows the tier measured from the branch local start with Asia/Damascus 12:00 before
+ ✔ T4 refund follows the tier measured from the branch local start with Asia/Damascus 11:59 before
+ ✔ T4 refund follows the tier measured from the branch local start with Asia/Muscat 48:01 before
+ ✔ T4 refund follows the tier measured from the branch local start with Asia/Muscat 47:59 before
+ ✔ T4 refund follows the tier measured from the branch local start with Asia/Muscat 12:00 before
+ ✔ T4 refund follows the tier measured from the branch local start with Asia/Muscat 11:59 before
+ ✔ Cancelling a waitlisted booking moves no money
+ ✔ A booking cannot be cancelled twice or refunded twice
+ ✔ A student cannot cancel someone elses booking
+
+Concurrent Booking (Tests\Feature\Concurrency\ConcurrentBooking)
+ ✔ T1 concurrent booking never exceeds capacity
+ ✔ T2 one student racing two overlapping sessions gets one booking and one charge
+ ✔ T3 same idempotency key sent in parallel books and charges once
+
+Money (Tests\Unit\Money)
+ ✔ It parses and prints three decimals exactly
+ ✔ Percent rounds half up with half of 42.125 rounds up
+ ✔ Percent rounds half up with half of 50.000 is exact
+ ✔ Percent rounds half up with full
+ ✔ Percent rounds half up with none
+ ✔ Percent rounds half up with half of 0.001 rounds up
+ ✔ Times applies a four decimal rate half up with 42.125 x 15% = 6.31875
+ ✔ Times applies a four decimal rate half up with 50 x 10%
+ ✔ Times applies a four decimal rate half up with 0.005 x 10% = 0.0005
+ ✔ Times applies a four decimal rate half up with 0.004 x 10% = 0.0004
+ ✔ Times applies a four decimal rate half up with full rate
+ ✔ It rejects floats and too many decimals
+
+Refund Policy (Tests\Unit\RefundPolicy)
+ ✔ The tier depends only on seconds left with 48:00:00 exactly
+ ✔ The tier depends only on seconds left with 47:59:59
+ ✔ The tier depends only on seconds left with 12:00:00 exactly
+ ✔ The tier depends only on seconds left with 11:59:59
+ ✔ The tier depends only on seconds left with already started
+
+Schema Constraints (Tests\Feature\Schema\SchemaConstraints)
+ ✔ Database rejects with C1 session mixes course of center 1 with branch of center 2
+ ✔ Database rejects with C3 confirmed_count above capacity (BR-04)
+ ✔ Database rejects with C3 confirmed_count below zero
+ ✔ Database rejects with C4 ledger row update is refused
+ ✔ Database rejects with C4 ledger row delete is refused
+ ✔ Database rejects with C4 ledger truncate is refused
+ ✔ Database rejects with C5 charge with positive amount
+ ✔ Database rejects with C5 top-up linked to a booking
+ ✔ Database rejects with C5 refund without a booking
+ ✔ Database rejects with C5 unknown movement type
+ ✔ Database rejects with C6 negative wallet balance
+ ✔ Database rejects with C7 second wallet for the same student
+ ✔ Database rejects with C8 unknown booking status
+ ✔ Database rejects with C8 waitlisted without a queue position
+ ✔ Database rejects with C11 confirmed without price and commission snapshot
+ ✔ Database rejects with C9 second active booking for the same student and session
+ ✔ Database rejects with C12 unknown session status
+ ✔ Database rejects with C13 second refund for the same booking
+ ✔ Database rejects with C14 same idempotency key twice for one student
+ ✔ Database rejects with Session interval must be positive
+ ✔ Database rejects with Commission rate above 100 percent
+ ✔ Rebooking after cancellation is allowed
+ ✔ Seeded wallets match their ledger
+
+Waitlist Promotion (Tests\Feature\Booking\WaitlistPromotion)
+ ✔ T5 cancel skips the unpayable earliest promotes the next and the canceller can rejoin
+ ✔ Nobody is promoted when no waitlisted student can pay
+
+Wallet Statement (Tests\Feature\Wallet\WalletStatement)
+ ✔ The statement lists the callers ledger oldest first
+ ✔ The statement requires a known student
+
+OK (69 tests, 309 assertions)
